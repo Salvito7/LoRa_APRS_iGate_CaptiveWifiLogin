@@ -1,18 +1,24 @@
 {
     "callsign": "NOCALL-10",
-    "stationMode": 2,
+    "stationMode": 1,
     "iGateComment": "LoRa_APRS_iGate",
     "wifi": {
         "AP": [
             {   "ssid": "WIFI_1",
                 "password": "WIFI_1_password",
                 "latitude": 0.0000000,
-                "longitude": 0.0000000
+                "longitude": 0.0000000,
+                "captiveLogin": false,
+                "captiveURL": "",
+                "captiveQuery": ""
             },
             {   "ssid": "WIFI_2",
                 "password": "WIFI_2_password",
                 "latitude": 0.0000000,
-                "longitude": 0.0000000
+                "longitude": 0.0000000,
+                "captiveLogin": false,
+                "captiveURL": "",
+                "captiveQuery": ""
             }
         ]
     },

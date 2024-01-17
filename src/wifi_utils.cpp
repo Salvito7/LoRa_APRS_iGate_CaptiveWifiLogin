@@ -1,8 +1,10 @@
 #include <WiFi.h>
+#include <HTTPClient.h>
 #include "configuration.h"
 #include "pins_config.h"
 #include "wifi_utils.h"
 #include "display.h"
+#include "lora_aprs_igate.cpp"
 
 extern Configuration  Config;
 extern WiFi_AP        *currentWiFi;
@@ -10,8 +12,49 @@ extern int            myWiFiAPIndex;
 extern int            myWiFiAPSize;
 extern int            stationMode;
 extern uint32_t       previousWiFiMillis;
+int            localWiFiAPIndex;
+bool            captiveLoginBool;
+
 
 namespace WIFI_Utils {
+
+void captiveLogin() {
+currentWiFi = &Config.wifiAPs[localWiFiAPIndex];
+
+if (currentWiFi->captiveLoginBool) { 
+  show_display("", " CaptiveLogin: true", "  WiFi Connected!!", "" , "     logging in ...", 1500);
+
+  HTTPClient http;
+  Serial.println("WifiIndex:" + localWiFiAPIndex);
+  Serial.print("captiveURL: "); 
+  Serial.println(currentWiFi->captiveURL);
+  http.begin(currentWiFi->captiveURL);
+  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  int httpCode = http.POST(currentWiFi->captiveQuery);
+  http.end(); 
+
+  // httpCode will be negative on error
+  if (httpCode > 0) {
+    if (httpCode == 200) {
+      // String payload = http.getString();   //uncommment this if you want to see the Servers HTML response (could lead to memory problems)
+      // Serial.println(payload);
+      Serial.printf("[HTTP] POST response code: %d\n", httpCode); 
+      show_display("HTTPlogin:  OK", "", "",   "   If no APRS-IS" , "  check URL/Query", "", 2000);  //wenn die credentials falsch sein nor kimp die normale login seite mit OK response 
+      
+      } else {
+        // HTTP header has been send and Server response header has been handled
+        Serial.printf("[HTTP] POST response code: %d\n", httpCode);
+        show_display("", " HTTP POST response: "+httpCode, "     Connected!!", "" , "     loading ...", 2000);
+      }
+    } else {
+      Serial.printf("[HTTP] POST failed, error: %s\n", http.errorToString(httpCode).c_str());
+      show_display("HTTPlogin:   FAILED", "", "%s\n", http.errorToString(httpCode).c_str(), "" , "Check Serial Monitor", "", 4000);
+    }
+  
+} else {
+  show_display("", "", "     Connected!!", "" , "     loading ...", 1000);
+}
+}
 
   void checkWiFi() {
     if ((WiFi.status() != WL_CONNECTED) && ((millis() - previousWiFiMillis) >= 30*1000)) {
@@ -67,6 +110,7 @@ namespace WIFI_Utils {
         Serial.print("Connected as ");
         Serial.println(WiFi.localIP());
         show_display("", "", "     Connected!!", "" , "     loading ...", 1000);
+        captiveLogin();
     } else if (WiFi.status() != WL_CONNECTED && stationMode==5) {
         Serial.println("\nNot connected to WiFi! (DigiRepeater Mode)");
         show_display("", "", " WiFi Not Connected!", "  DigiRepeater MODE" , "     loading ...", 2000);

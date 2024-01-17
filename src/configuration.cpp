@@ -27,6 +27,9 @@ void Configuration::readFile(fs::FS &fs, const char *fileName) {
       wifiap.password               = WiFiArray[i]["password"].as<String>();
       wifiap.latitude               = WiFiArray[i]["latitude"].as<double>();
       wifiap.longitude              = WiFiArray[i]["longitude"].as<double>();
+      wifiap.captiveLoginBool       = WiFiArray[i]["captiveLogin"].as<bool>();
+      wifiap.captiveURL             = WiFiArray[i]["captiveURL"].as<String>();
+      wifiap.captiveQuery           = WiFiArray[i]["captiveQuery"].as<String>();
 
       wifiAPs.push_back(wifiap);
     }

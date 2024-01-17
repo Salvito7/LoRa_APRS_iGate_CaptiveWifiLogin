@@ -31,19 +31,20 @@ namespace APRS_IS_Utils {
     Serial.print("Connecting to APRS-IS ...     ");
     while (!espClient.connect(Config.aprs_is.server.c_str(), Config.aprs_is.port) && count < 20) {
       Serial.println("Didn't connect with server...");
-      delay(1000);
+      delay(500);
       espClient.stop();
       espClient.flush();
       Serial.println("Run client.stop");
       Serial.println("Trying to connect with Server: " + String(Config.aprs_is.server) + " AprsServerPort: " + String(Config.aprs_is.port));
       count++;
+      show_display("Connecting APRS-IS: ", "", "Try: " +String(count), "" , "", "", 2000);
       Serial.println("Try: " + String(count));
     }
-    if (count == 20) {
+    if (count == 10) {
       Serial.println("Tried: " + String(count) + " FAILED!");
     } else {
       Serial.println("Connected!\n(Server: " + String(Config.aprs_is.server) + " / Port: " + String(Config.aprs_is.port) +")");
-      aprsauth = "user " + Config.callsign + " pass " + Config.aprs_is.passcode + " vers CA2RXU_LoRa_iGate 1.2 filter t/m/" + Config.callsign + "/" + (String)Config.aprs_is.reportingDistance + "\n\r"; 
+      aprsauth = "user " + Config.callsign + " pass " + Config.aprs_is.passcode + " vers CD2RXUxSalvito_LoRa_iGate 1.2 filter t/m/" + Config.callsign + "/" + (String)Config.aprs_is.reportingDistance + "\n\r"; 
       espClient.write(aprsauth.c_str());
       delay(200);
     }

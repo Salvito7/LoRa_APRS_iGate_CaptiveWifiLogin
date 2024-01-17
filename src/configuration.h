@@ -11,6 +11,9 @@ public:
   String  password;
   double  latitude;
   double  longitude;
+  bool    captiveLoginBool;
+  String  captiveURL;
+  String  captiveQuery;
 };
 
 class DIGI {
