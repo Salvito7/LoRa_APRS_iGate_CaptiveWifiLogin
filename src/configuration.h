@@ -14,6 +14,9 @@ public:
   bool    captiveLoginBool;
   String  captiveURL;
   String  captiveQuery;
+  bool    wpa2ent;
+  String  wpa2id;
+  String  wpa2pw;
 };
 
 class DIGI {
@@ -94,6 +97,7 @@ public:
 
   Configuration();
   void validateConfigFile(String currentBeaconCallsign);
+  void validateWifiConfig(int currentAPIndex);
 
 private:
   void readFile(fs::FS &fs, const char *fileName) ;

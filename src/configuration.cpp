@@ -30,6 +30,9 @@ void Configuration::readFile(fs::FS &fs, const char *fileName) {
       wifiap.captiveLoginBool       = WiFiArray[i]["captiveLogin"].as<bool>();
       wifiap.captiveURL             = WiFiArray[i]["captiveURL"].as<String>();
       wifiap.captiveQuery           = WiFiArray[i]["captiveQuery"].as<String>();
+      wifiap.wpa2ent                = WiFiArray[i]["wpa2Enterprise"].as<bool>();
+      wifiap.wpa2id           	    = WiFiArray[i]["wpa2ID"].as<String>();
+      wifiap.wpa2pw                 = WiFiArray[i]["wpa2Password"].as<String>();
 
       wifiAPs.push_back(wifiap);
     }
@@ -86,4 +89,15 @@ void Configuration::validateConfigFile(String currentBeaconCallsign) {
       delay(1000);
     }
   }
+}
+
+void Configuration::validateWifiConfig(int currentAPIndex) {
+    WiFi_AP currentAP = wifiAPs[currentAPIndex];
+    if (currentAP.captiveLoginBool && currentAP.wpa2ent) {
+      while(1) {
+      Serial.print("\nCaptiveLogin and WPA2EnterpriseLogin cant both be true. Change your igate_config.json");
+      show_display("", "", "CaptiveLogin and WPA2EnterpriseLogin cant both be true", "", "", 0);
+      delay(1000);
+      }
+    }  
 }

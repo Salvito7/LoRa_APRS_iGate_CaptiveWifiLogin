@@ -60,6 +60,11 @@ void setup() {
   #endif
   delay(1000);
   Utils::setupDisplay();
+
+  for(int i=0; i<myWiFiAPSize; i++) {
+    Config.validateWifiConfig(i);
+  }
+  
   WIFI_Utils::setup();
   LoRa_Utils::setup();
   Utils::validateDigiFreqs();

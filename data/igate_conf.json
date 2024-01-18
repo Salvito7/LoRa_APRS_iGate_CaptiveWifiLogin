@@ -1,24 +1,31 @@
 {
-    "callsign": "NOCALL-10",
+    "callsign": "ITBED8-10",
     "stationMode": 1,
     "iGateComment": "LoRa_APRS_iGate",
     "wifi": {
         "AP": [
             {   "ssid": "WIFI_1",
-                "password": "WIFI_1_password",
+                "password": "wifi_1_password",
                 "latitude": 0.0000000,
                 "longitude": 0.0000000,
                 "captiveLogin": false,
                 "captiveURL": "",
-                "captiveQuery": ""
+                "captiveQuery": "",
+                "wpa2Enterprise": true,
+                "wpa2ID": "",
+                "wpa2Password": ""
+
             },
             {   "ssid": "WIFI_2",
-                "password": "WIFI_2_password",
+                "password": "wifi_2_password",
                 "latitude": 0.0000000,
                 "longitude": 0.0000000,
                 "captiveLogin": false,
                 "captiveURL": "",
-                "captiveQuery": ""
+                "captiveQuery": "",
+                "wpa2Enterprise": true,
+                "wpa2ID": "",
+                "wpa2Password": ""
             }
         ]
     },
