@@ -7,11 +7,11 @@
 
 extern Configuration  Config;
 extern WiFi_AP        *currentWiFi;
-extern int            myWiFiAPIndex;
 extern int            myWiFiAPSize;
 extern int            stationMode;
 extern uint32_t       previousWiFiMillis;
-int            localWiFiAPIndex;
+
+int             localWiFiAPIndex;
 bool            captiveLoginBool;
 
 
@@ -84,17 +84,17 @@ if (currentWiFi->captiveLoginBool) {
       #if defined(TTGO_T_LORA32_V2_1) || defined(HELTEC_V2) || defined(HELTEC_V3) || defined(ESP32_DIY_LoRa) || defined(ESP32_DIY_1W_LoRa)
       digitalWrite(internalLedPin,LOW);
       #endif
-      if ((millis() - start) > 10000){
+      if ((millis() - start) > 6000){
         delay(1000);
-        if(myWiFiAPIndex >= (myWiFiAPSize-1)) {
-          myWiFiAPIndex = 0;
+        if(localWiFiAPIndex >= (myWiFiAPSize-1)) {
+          localWiFiAPIndex = 0;
           if (stationMode==5) {
             wifiCounter++;
           }
         } else {
-          myWiFiAPIndex++;
+          localWiFiAPIndex++;
         }
-        currentWiFi = &Config.wifiAPs[myWiFiAPIndex];
+        currentWiFi = &Config.wifiAPs[localWiFiAPIndex];
         start = millis();
         Serial.print("\nConnecting to WiFi '"); Serial.print(currentWiFi->ssid); Serial.println("' ...");
         show_display("", "", "Connecting to Wifi:", "", currentWiFi->ssid + " ...", 0);
