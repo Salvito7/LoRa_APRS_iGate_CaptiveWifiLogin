@@ -4,7 +4,6 @@
 #include "pins_config.h"
 #include "wifi_utils.h"
 #include "display.h"
-#include "lora_aprs_igate.cpp"
 
 extern Configuration  Config;
 extern WiFi_AP        *currentWiFi;
