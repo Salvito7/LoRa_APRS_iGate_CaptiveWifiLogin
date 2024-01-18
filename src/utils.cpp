@@ -86,7 +86,7 @@ namespace Utils {
         digitalWrite(internalLedPin,HIGH);
         #endif
         Serial.println("\nStarting iGate: " + Config.callsign + "   Version: " + versionDate);
-        show_display(" LoRa APRS", "", "      ( iGATE )", "", "", "Richonguzman / CA2RXU", "      " + versionDate, 4000);
+        show_display(" LoRa APRS", "", "      ( iGATE )", "", "     Richonguzman", "  CaptiveLogin Fork", "      " + versionDate, 4000);
         #if defined(TTGO_T_LORA32_V2_1) || defined(HELTEC_V2) || defined(HELTEC_V3) || defined(ESP32_DIY_LoRa) || defined(ESP32_DIY_1W_LoRa)
         digitalWrite(internalLedPin,LOW);
         #endif
