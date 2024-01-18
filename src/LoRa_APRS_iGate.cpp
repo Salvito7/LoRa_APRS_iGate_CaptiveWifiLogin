@@ -69,6 +69,7 @@ void setup() {
   //Utils::startServer();
   SYSLOG_Utils::setup();
   BME_Utils::setup();
+  Config.validateConfigFile(Config.callsign);
 }
 
 void loop() {
